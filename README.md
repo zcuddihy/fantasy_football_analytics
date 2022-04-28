@@ -10,6 +10,8 @@ Consider a week where one of your starters is on a bye or injured. You'll likely
 
 Determining this value is difficult, however, because there can be so many different combinations of teams. In order to simplify the analysis, we'll need to control for the players performance by considering the rest of the team is made up of average starters. Similarily for the opponent, their entire team will be made up of average starters. By comparing the actual players performance to the average starter for that position, we can calculate how many more (or less) points your team would score compared to your opponent. A similar comparison can be run for a replacement player. 
 
-!(figures/war_probability_won.png)
+### Example of the team distributions with Derrick Henry (week 3, 2021) as the control player
+
+![Distribution comparison with Derrick Henry on our team](figures/war_team_distributions.png)
 
 
