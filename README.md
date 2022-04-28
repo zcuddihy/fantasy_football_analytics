@@ -26,4 +26,5 @@ In week 2, Derrick Henry went off for 48 points (PPR) while an average replaceme
 
 ![](figures/war_per_game_2021_top30.png)
 
+Cooper Kupp is without a doubt, the fantasy football MVP for 2021. His performance over the whole season added as much as 3 wins when compared to a replacement level player. Had Derrick Henry not suffered his foot injury, he looked primed to challenge Cooper Kupp for this throne.
 
