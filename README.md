@@ -20,4 +20,10 @@ Determining this value is difficult, however, because there can be so many diffe
 
 In week 2, Derrick Henry went off for 48 points (PPR) while an average replacement RB would've only scored 9 points and an average starting RB would've only scored 15 points. Having Derrick Henry on your team likely gave you a 33 point advantage over your opponents RB. No wonder your teams winning percentage would've been 84% assuming we know nothing else about the rest of the team. 
 
+### 2021 Most Valuable Players Measured by Wins Above Replacement
+
+![](figures/war_2021_top30.png)
+
+![](figures/war_per_game_2021_top30.png)
+
 
