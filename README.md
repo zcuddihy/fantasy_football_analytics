@@ -10,12 +10,14 @@ Consider a week where one of your starters is on a bye or injured. You'll likely
 
 Determining this value is difficult, however, because there can be so many different combinations of teams. In order to simplify the analysis, we'll need to control for the players performance by considering the rest of the team is made up of average starters. Similarily for the opponent, their entire team will be made up of average starters. By comparing the actual players performance to the average starter for that position, we can calculate how many more (or less) points your team would score compared to your opponent. A similar comparison can be run for a replacement player. 
 
-### Example of the team distributions with Derrick Henry (week 3, 2021) as the control player
+### Example of the team distributions with Derrick Henry (week 2, 2021) as the control player
 
 ![](figures/war_team_distributions.png)
 ![](figures/war_team_distributions_replacement.png)
 
 ### Combined distributions to compute the win probability (x > 0)
 ![](figures/war_probability_won.png)
+
+In week 2, Derrick Henry went off for 48 points (PPR) while an average replacement RB would've only scored 9 points and an average starting RB would've only scored 15 points. Having Derrick Henry on your team likely gave you a 33 point advantage over your opponents RB. No wonder your teams winning percentage would've been 84% assuming we know nothing else about the rest of the team. 
 
 
