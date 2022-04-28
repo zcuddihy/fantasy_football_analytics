@@ -12,6 +12,10 @@ Determining this value is difficult, however, because there can be so many diffe
 
 ### Example of the team distributions with Derrick Henry (week 3, 2021) as the control player
 
-![Distribution comparison with Derrick Henry on our team](figures/war_team_distributions.png)
+![](figures/war_team_distributions.png)
+![](figures/war_team_distributions_replacement.png)
+
+### Combined distributions to compute the win probability (x > 0)
+![](figures/war_probability_won.png)
 
 
