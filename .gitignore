@@ -1,2 +1,6 @@
 .DS_Store
 .ipynb_checkpoints
+secrets.py
+*.db
+*.csv
+*__pycache__
