@@ -18,7 +18,7 @@ def create_tables(conn):
     """Creates the database tables if they do not exist"""
 
     query_passing = """CREATE TABLE IF NOT EXISTS passing (
-                        name PRIMARY KEY,
+                        name TEXT,
                         position TEXT,
                         age REAL,
                         date TEXT,
@@ -35,29 +35,29 @@ def create_tables(conn):
                         interceptions INTEGER,
                         qb_rating REAL,
                         sacks INTEGER,
-                        sacked_yards INTEGER,
-                        CONSTRAINT unique_uc UNIQUE(player, team, date)
+                        sacked_yards INTEGER
                         ); """
 
     query_rushing = """CREATE TABLE IF NOT EXISTS rushing (
-                        name PRIMARY KEY,
+                        player TEXT,
                         position TEXT,
                         age REAL,
-                        date TEXT,
                         team TEXT,
                         opponent TEXT,
                         home_or_away TEXT,
-                        result TEXT,
+                        game_result TEXT,
+                        game_score TEXT,
+                        game_date TEXT,
                         week INTEGER,
-                        day TEXT,
-                        attempts INTEGER,
-                        yards REAL,
-                        touchdowns INTEGER,
-                        CONSTRAINT unique_uc UNIQUE(player, team, date)
+                        day_of_week TEXT,
+                        season INTEGER,
+                        rushing_attempts INTEGER,
+                        rushing_yards REAL,
+                        rushing_TD INTEGER
                         ); """
 
     query_receiving = """CREATE TABLE IF NOT EXISTS receiving (
-                        name PRIMARY KEY,
+                        name TEXT,
                         position TEXT,
                         age REAL,
                         date TEXT,
@@ -70,15 +70,14 @@ def create_tables(conn):
                         targets INTEGER,
                         receptions INTEGER,
                         yards REAL,
-                        touchdowns INTEGER,
-                        CONSTRAINT unique_uc UNIQUE(player, team, date)
+                        touchdowns INTEGER
                         ); """
 
     try:
         c = conn.cursor()
-        c.execute(query_passing)
+        # c.execute(query_passing)
         c.execute(query_rushing)
-        c.execute(query_receiving)
+        # c.execute(query_receiving)
     except Error as e:
         print(e)
 

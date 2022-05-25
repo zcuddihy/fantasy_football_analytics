@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import secrets
 import numpy as np
+import database as db
+import time
 
 # Install driver
 opts = webdriver.ChromeOptions()
@@ -28,13 +30,8 @@ def site_login():
 site_login()
 
 # %%
-
-import numpy as np
-
-
-def get_rushing_stats():
-    RUSH_URL = "https://stathead.com/football/pgl_finder.cgi?request=1&game_num_max=99&week_num_max=7&order_by=rush_att&match=game&season_start=1&year_max=2021&order_by_asc=0&season_end=-1&age_min=0&week_num_min=7&game_type=R&age_max=99&game_num_min=0&year_min=1972&cstat[1]=rush_att&ccomp[1]=gt&cval[1]=1&offset=5700"
-    driver.get(RUSH_URL)
+def get_rushing_stats(url: str):
+    driver.get(url)
 
     # Get table from URL
     soup = BeautifulSoup(driver.page_source, "lxml")
@@ -54,7 +51,7 @@ def get_rushing_stats():
             "Opp": "opponent",
             "Result": "game_result",
             "Week": "week",
-            "Day": "day",
+            "Day": "day_of_week",
             "Att": "rushing_attempts",
             "Yds": "rushing_yards",
             "TD": "rushing_TD",
@@ -64,8 +61,13 @@ def get_rushing_stats():
 
     # Remove the asterisk from the player names
     df.player = df.player.str.strip("*")
+
     # Remove sub headers within table
     df = df[df.player != "Player"]
+
+    # Clean the position column
+    df.position = np.where(df.position == "HB", "RB", df.position)
+    df.position = df.position.str.strip("'")
 
     # Convert the age column decimal
     # Current format is years-days
@@ -91,12 +93,41 @@ def get_rushing_stats():
     return df
 
 
-df = get_rushing_stats()
-
-df
-
 # %%
 
 
 def scrape_data():
-    RUSH_URL = "https://stathead.com/football/pgl_finder.cgi?request=1&game_num_max=99&week_num_max=7&order_by=rush_att&match=game&season_start=1&year_max=2021&order_by_asc=0&season_end=-1&age_min=0&week_num_min=7&game_type=R&age_max=99&game_num_min=0&year_min=1972&cstat[1]=rush_att&ccomp[1]=gt&cval[1]=1&offset=5700"
+
+    # Create a connection to the SQLite database
+    conn = db.create_connection("../data/football_stats.db")
+    db.create_tables(conn)
+
+    # Scrape the rushing data
+    for week in range(1, 19, 1):
+        offset = 0
+        while True:
+            # Limit request rate
+            time.sleep(1.1)
+            # Scrape the URL
+            RUSH_URL = f"https://stathead.com/football/pgl_finder.cgi?request=1&game_num_max=99&week_num_max={week}&order_by=rush_att&match=game&season_start=1&year_max=2021&order_by_asc=0&season_end=-1&week_num_min={week}&age_min=0&game_type=R&age_max=99&positions[]=qb&positions[]=rb&positions[]=wr&positions[]=te&game_num_min=0&year_min=1972&cstat[1]=rush_att&ccomp[1]=gt&cval[1]=1&offset={offset}"
+            try:
+                df = get_rushing_stats(RUSH_URL)
+            except:
+                df = None
+            # Check if a table wasn't found which indicates end of the scraping for the given week
+            if df is None:
+                break
+            # Save the data
+            df.to_sql("rushing", con=conn, if_exists="append", index=False)
+            print(f"Week: {week}, offset: {offset}")
+            # Increase the offset for the URL
+            offset += 100
+
+    conn.close()
+
+
+scrape_data()
+
+
+# %%
+
